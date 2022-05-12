@@ -26,7 +26,7 @@
     <div class="login-body">
       <div class="login-form">
         <div class="form-main">
-          <h1>Sign In</h1>
+          <h1>Sign Up</h1>
           <form @click.self.prevent>
             <div class="form-input">
               <input
@@ -38,20 +38,21 @@
             <div class="form-input">
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="New Password"
                 autocomplete="cc-password"
-                v-model="password"
+                v-model="newPassword"
               />
             </div>
-            <button @click="handleLogin" class="form-btn">Sign In</button>
+            <div class="form-input">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                autocomplete="cc-password"
+                v-model="confirmPassword"
+              />
+            </div>
+            <button @click="handleLogin" class="form-btn">Register</button>
           </form>
-          <div class="form-redirect">
-            <p>New to Netflix?</p>
-            <a href="/register">Register now</a>
-          </div>
-          <div class="form-qc">
-            <p>This page Nguyen Quang Viet.</p>
-          </div>
         </div>
       </div>
     </div>
@@ -66,8 +67,9 @@ import Footer from '../components/Footer.vue';
 export default {
   data() {
     return {
-      username: [],
-      password: [],
+      username: '',
+      newPassword: '',
+      confirmPassword: '',
     };
   },
   components: {
@@ -76,10 +78,28 @@ export default {
   methods: {
     handleLogin(e) {
       e.preventDefault();
-      localStorage.setItem('username', this.username);
-      localStorage.setItem('password', this.password);
-      (this.username = ''), (this.password = '');
-      this.$router.push('/');
+
+      if (this.newPassword != this.confirmPassword) {
+        alert('Mật khẩu không trùng khớp !');
+        return;
+      }
+      if (this.username) {
+        const listUser = JSON.parse(localStorage.getItem('listUser')) || [];
+        const isExistUser = listUser.some((e) => e.username === this.username);
+        if (isExistUser) {
+          alert('Username đã được đăng kí !');
+          return;
+        }
+        const newUser = {
+          username: this.username,
+          password: this.confirmPassword,
+        };
+        listUser.push(newUser);
+        localStorage.setItem('listUser', JSON.stringify(listUser));
+      }
+      (this.username = ''),
+        (this.newPassword = ''),
+        (this.confirmPassword = '');
     },
   },
 };
@@ -209,12 +229,6 @@ export default {
           color: #fff;
           text-decoration: none;
         }
-      }
-      .form-qc {
-        color: #737373;
-        font-size: 20px;
-        font-weight: 500;
-        margin-top: 16px;
       }
     }
   }

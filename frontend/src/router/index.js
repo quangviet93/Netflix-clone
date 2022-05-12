@@ -6,13 +6,19 @@ const routes = [
   {
     path: '/',
     name: 'landing-page',
-    meta: { title: 'NFT Artists' },
+    meta: { title: 'NetFlix' },
     component: () => import('@/views/LandingPage.vue'),
+  },
+  {
+    path: '/register',
+    name: 'register-page',
+    meta: { title: 'NetFlix' },
+    component: () => import('@/views/RegisterPage.vue'),
   },
   {
     path: '/login',
     name: 'login-page',
-    meta: { title: 'NFT Artists' },
+    meta: { title: 'NetFlix' },
     component: () => import('@/views/LoginPage.vue'),
   },
 ];
