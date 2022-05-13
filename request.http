@@ -1,0 +1,75 @@
+POST http://localhost:3001/users/register
+content-type: application/json
+
+{
+  "username": "viet",
+  "fullname": "nguyen viet",
+  "password": "123456"
+}
+###
+POST http://localhost:3001/users/login
+content-type: application/json
+
+{
+  "username": "viet",
+  "password": "123456"
+}
+###
+POST http://localhost:3001/genre/create
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Tình Cảm"
+}
+###
+PUT http://localhost:3001/genre/update/627e1773340d75ed7f1fb953
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Hành Động"
+}
+###
+DELETE  http://localhost:3001/genre/delete/627e1773340d75ed7f1fb953
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Hành Động"
+}
+###
+POST http://localhost:3001/actor/create
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Mr Bin",
+  "birthday":"10/10/1980",
+  "nationality":"USA"
+}
+###
+PUT http://localhost:3001/actor/update/627e1d5ed96869490db1992a
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Mr Bin",
+  "birthday":"20/20/1980",
+  "nationality":"USA"
+}
+###
+POST http://localhost:3001/movie/create
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+
+{
+  "name": "Hào Phóng Có Vị Gì ",
+  "description":"Quà tặng cuộc sống",
+  "genre":["627e1540333b758f49d758a5"],
+  "actor":["627e1d5ed96869490db1992a"],
+  "thumbnail":"",
+  "video":"https://www.youtube.com/watch?v=ZOOt966W7rA",
+  "trailer":"https://www.youtube.com/watch?v=ZOOt966W7rA"
+}
+

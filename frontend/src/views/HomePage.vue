@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="home-netflix">
     <div class="header-netflix">
       <div class="container-header">
         <div class="header-logo">
@@ -15,43 +15,41 @@
               ></path>
             </g>
           </svg>
+          <div class="">
+            <ul>
+              <li>
+                <a href="">Trang chủ</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="header-login-logout"></div>
+        <div class="header-login-logout">Avatar</div>
       </div>
     </div>
     <div class="background-image">
       <img src="../assets/image-backgroup/backgroup1.jpg" alt="" />
       <div class="concord-img-gradient"></div>
     </div>
-    <div class="login-body">
-      <div class="login-form">
-        <div class="form-main">
-          <h1>Sign In</h1>
-          <form @submit.prevent="handleLogin">
-            <div class="form-input">
-              <input
-                type="text"
-                placeholder="Email or phone number"
-                v-model="username"
-              />
-            </div>
-            <div class="form-input">
-              <input
-                type="password"
-                placeholder="Password"
-                autocomplete="cc-password"
-                v-model="password"
-              />
-            </div>
-            <button type="submit" class="form-btn">Sign In</button>
-          </form>
-          <div class="form-redirect">
-            <p>New to Netflix?</p>
-            <a href="/register">Register now</a>
-          </div>
-          <div class="form-qc">
-            <p>This page Nguyen Quang Viet.</p>
-          </div>
+    <div class="row-film-container">
+      <h2>
+        <a href="">Sản xuất tại Hàn Quốc</a>
+      </h2>
+      <div class="row-film">
+        <div class="film-item">
+          <a href="">
+            <img
+              src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABefqKmeCaT8B2S7lyyZX6CCiZ-FemeTW15nW8tgDv4hzXahaWIJcJUAatd-02PtHBXl2dM_9lNJj5l_HY_pjjUdCqP7SK2jobw_Rv2eq05JkFkomZBfodSoJ--beNX_kScXB.jpg?r=e3d"
+              alt=""
+            />
+          </a>
+        </div>
+        <div class="film-item">
+          <a href="">
+            <img
+              src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABZNsQHOP22N7o-MEQqvqhrb7RW4z9S7OfXy_DuEztAmXn6sTUX_E0m_yPPgLhW9xYoRIFTDvL-5TKqDPRaYjU70jDAveV8-4sJYAwU3CQmNPA-gJTefzR5B5CeC3QSnYYCnXkmO7Hl-Czd74rdXBeiFxM9lINFe4DRSJOtKduNpxMCKPPqyBIeat1dWR-ls.jpg?r=001"
+              alt=""
+            />
+          </a>
         </div>
       </div>
     </div>
@@ -62,43 +60,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Footer from '../components/Footer.vue';
 export default {
-  data() {
-    return {
-      username: [],
-      password: [],
-    };
-  },
   components: {
     Footer,
   },
-  methods: {
-    handleLogin() {
-      const dataUserInput = {
-        username: this.username,
-        password: this.password,
-      };
-      if (this.username === '' || this.password === '') {
-        alert('Không được để trống !');
-        return;
-      }
-      const dataListUserLocalStorage = JSON.parse(
-        localStorage.getItem('listUser')
-      );
-      const authUser = dataListUserLocalStorage.find((e) => {
-        return (
-          e.username === dataUserInput.username &&
-          e.password === dataUserInput.password
-        );
+  methods: {},
+  created() {
+    const options = {
+      method: 'GET',
+      url: 'https://juanroldan1989-moviequotes-v1.p.rapidapi.com/api/v1/quotes',
+      params: { actor: 'Al Pacino' },
+      headers: {
+        Authorization: 'Token token=yd8WzkWNEEzGtqMSgiZBrwtt',
+        'X-RapidAPI-Host': 'netflix-unofficial.p.rapidapi.com',
+        'X-RapidAPI-Key': '1b92439fd4msh96b159053ca1286p1cb602jsn0e5f0fa8bed1',
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
       });
-      if (!authUser) {
-        alert('Tên hoặc mật khẩu không đúng !');
-        return;
-      }
-      localStorage.setItem('authUser', JSON.stringify(authUser[0]));
-      this.$router.push('/home');
-    },
   },
 };
 </script>
@@ -130,18 +117,12 @@ export default {
         width: 167px;
       }
     }
-    .header-login-logout a {
-      background-color: #e50914;
+    .header-login-logout {
       color: #fff;
-      line-height: normal;
-      padding: 7px 17px;
-      font-weight: 400;
-      text-decoration: none;
-      border-radius: 3px;
     }
   }
 }
-.login {
+.home-netflix {
   background-color: #000;
   .background-image {
     height: 747.766px;
@@ -171,74 +152,25 @@ export default {
     }
   }
 }
-.login-body {
+.row-film-container {
   position: relative;
-  margin: 50px auto 100px auto;
-  max-width: 450px;
-  .login-form {
-    padding: 60px 68px 40px;
-    background-color: rgba(0, 0, 0, 0.75);
-    min-height: 600px;
-    .form-main {
-      h1 {
-        color: #fff;
-        font-size: 32px;
-        font-weight: 700;
-        margin-bottom: 28px;
-      }
-      form {
-        display: flex;
-        flex-direction: column;
-        max-width: 330px;
-        margin: 0 auto;
-        .form-input {
-          padding-bottom: 16px;
-          font-size: 16px;
-          input {
-            width: 100%;
-            background: #333;
-            border-radius: 4px;
-            border: 0;
-            color: #fff;
-            height: 50px;
-            line-height: 50px;
-            padding: 0 20px 0;
-          }
-        }
-        .form-btn {
-          border-radius: 4px;
-          font-size: 16px;
-          font-weight: 700;
-          margin: 24px 0 12px;
-          background: #e50914;
-          color: #fff;
-          min-width: 98px;
-          min-height: 55px;
-        }
-      }
-      .form-redirect {
-        display: flex;
-        justify-content: space-between;
-        color: #737373;
-        font-size: 16px;
-        font-weight: 500;
-        margin-top: 16px;
-        a {
-          color: #fff;
-          text-decoration: none;
-        }
-      }
-      .form-qc {
-        color: #737373;
-        font-size: 20px;
-        font-weight: 500;
-        margin-top: 16px;
-      }
+  padding-top: 50px;
+  h2 a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .row-film {
+    display: flex;
+    padding: 0 60px;
+    .film-item {
+      padding: 0 5px;
     }
   }
 }
+
 .footer-login {
-  position: relative;
-  background: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 </style>

@@ -21,6 +21,12 @@ const routes = [
     meta: { title: 'NetFlix' },
     component: () => import('@/views/LoginPage.vue'),
   },
+  {
+    path: '/home',
+    name: 'home-page',
+    meta: { title: 'NetFlix' },
+    component: () => import('@/views/HomePage.vue'),
+  },
 ];
 
 const router = new VueRouter({

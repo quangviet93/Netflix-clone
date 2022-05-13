@@ -79,6 +79,14 @@ export default {
     handleLogin(e) {
       e.preventDefault();
 
+      if (
+        this.username === '' ||
+        this.newPassword === '' ||
+        this.confirmPassword === ''
+      ) {
+        alert('Không được để trống !');
+        return;
+      }
       if (this.newPassword != this.confirmPassword) {
         alert('Mật khẩu không trùng khớp !');
         return;
@@ -100,6 +108,7 @@ export default {
       (this.username = ''),
         (this.newPassword = ''),
         (this.confirmPassword = '');
+      this.$router.push('/login');
     },
   },
 };
