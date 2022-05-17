@@ -29,11 +29,10 @@
           <h1>Sign Up</h1>
           <form @click.self.prevent>
             <div class="form-input">
-              <input
-                type="text"
-                placeholder="Email or phone number"
-                v-model="username"
-              />
+              <input type="text" placeholder="UserName" v-model="username" />
+            </div>
+            <div class="form-input">
+              <input type="text" placeholder="FullName" v-model="fullName" />
             </div>
             <div class="form-input">
               <input
@@ -64,10 +63,12 @@
 
 <script>
 import Footer from '../components/Footer.vue';
+import apiUser from '@/api/api_user.js';
 export default {
   data() {
     return {
       username: '',
+      fullName: '',
       newPassword: '',
       confirmPassword: '',
     };
@@ -76,11 +77,12 @@ export default {
     Footer,
   },
   methods: {
-    handleLogin(e) {
+    async handleLogin(e) {
       e.preventDefault();
 
       if (
         this.username === '' ||
+        this.fullName === '' ||
         this.newPassword === '' ||
         this.confirmPassword === ''
       ) {
@@ -100,10 +102,10 @@ export default {
         }
         const newUser = {
           username: this.username,
+          fullname: this.fullName,
           password: this.confirmPassword,
         };
-        listUser.push(newUser);
-        localStorage.setItem('listUser', JSON.stringify(listUser));
+        await apiUser.register(newUser);
       }
       (this.username = ''),
         (this.newPassword = ''),

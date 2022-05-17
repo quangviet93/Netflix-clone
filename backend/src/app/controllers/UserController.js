@@ -32,20 +32,26 @@ const UserController = {
   },
   register: async (req, res) => {
     const dataUsers = req.body;
-    const isExisted = await User.exists({ username: dataUsers.username });
-    if (isExisted) {
-      res.json({
-        success: false,
-        message: "username đã tồn tại !",
-      });
-    } else {
-      const data = req.body;
-      data.password = await hashPassword(req.body.password);
-      const user = new User(data);
-      await user.save();
+    dataUsers.password = await hashPassword(dataUsers.password);
+    const user = new User(dataUsers);
+    await user.save();
+    res.json({
+      success: true,
+      user,
+    });
+  },
+  getAllUser: async (req, res) => {
+    try {
+      const allUser = await User.find();
       res.json({
         success: true,
-        user,
+        message: "Get All User",
+        allUser: allUser,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        message: error,
       });
     }
   },

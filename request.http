@@ -1,3 +1,6 @@
+GET http://localhost:3001/movie/all
+###
+
 POST http://localhost:3001/users/register
 content-type: application/json
 
@@ -61,10 +64,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZ
 ###
 POST http://localhost:3001/movie/create
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI0MzA2NzcsImV4cCI6MTY1MjUxNzA3N30.EyY0hHUJ0mOc0By5NdE6w8R9mSrzCP1F28QfPCtEDGw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI3NTQ3MTYsImV4cCI6MTY1Mjg0MTExNn0._NK-zB8SEqZOPOigf-rPJEKiuax4pSYhxi8bcvxf5QA
 
 {
-  "name": "Hào Phóng Có Vị Gì ",
+  "name": "Hào Phóng Có Vị Gì 2",
   "description":"Quà tặng cuộc sống",
   "genre":["627e1540333b758f49d758a5"],
   "actor":["627e1d5ed96869490db1992a"],
@@ -72,4 +75,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZ
   "video":"https://www.youtube.com/watch?v=ZOOt966W7rA",
   "trailer":"https://www.youtube.com/watch?v=ZOOt966W7rA"
 }
+###
+PUT http://localhost:3001/movie/update/6283092af145d6696f654008
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI3NTQ3MTYsImV4cCI6MTY1Mjg0MTExNn0._NK-zB8SEqZOPOigf-rPJEKiuax4pSYhxi8bcvxf5QA
+
+{
+  "name": "Hào Phóng Có Vị Gì 3",
+  "description":"Quà tặng cuộc sống",
+  "genre":["627e1540333b758f49d758a5"],
+  "actor":["627e1d5ed96869490db1992a"],
+  "thumbnail":"",
+  "video":"https://www.youtube.com/watch?v=ZOOt966W7rA",
+  "trailer":"https://www.youtube.com/watch?v=ZOOt966W7rA"
+}
+###
+DELETE http://localhost:3001/movie/delete/6283092af145d6696f654008
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpZXQiLCJpYXQiOjE2NTI3NTQ3MTYsImV4cCI6MTY1Mjg0MTExNn0._NK-zB8SEqZOPOigf-rPJEKiuax4pSYhxi8bcvxf5QA
+
+
 

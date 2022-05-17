@@ -43,7 +43,7 @@
                 v-model="password"
               />
             </div>
-            <button type="submit" class="form-btn">Sign In</button>
+            <button @click="handleLogin" class="form-btn">Sign In</button>
           </form>
           <div class="form-redirect">
             <p>New to Netflix?</p>
@@ -63,6 +63,7 @@
 
 <script>
 import Footer from '../components/Footer.vue';
+import aipUser from '@/api/api_user.js';
 export default {
   data() {
     return {
@@ -74,19 +75,18 @@ export default {
     Footer,
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       const dataUserInput = {
         username: this.username,
         password: this.password,
       };
       if (this.username === '' || this.password === '') {
+        console.log('ahihi');
         alert('Không được để trống !');
         return;
       }
-      const dataListUserLocalStorage = JSON.parse(
-        localStorage.getItem('listUser')
-      );
-      const authUser = dataListUserLocalStorage.find((e) => {
+      const allUser = await aipUser.getAllUser();
+      const authUser = allUser.data.allUser.find((e) => {
         return (
           e.username === dataUserInput.username &&
           e.password === dataUserInput.password
@@ -96,7 +96,6 @@ export default {
         alert('Tên hoặc mật khẩu không đúng !');
         return;
       }
-      localStorage.setItem('authUser', JSON.stringify(authUser[0]));
       this.$router.push('/home');
     },
   },
