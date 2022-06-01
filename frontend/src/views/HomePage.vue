@@ -24,6 +24,9 @@
           </div>
         </div>
         <div class="header-login-logout">Avatar</div>
+        <div class="header-login-logout">
+          <button @click="handleLogout">Log Out</button>
+        </div>
       </div>
     </div>
     <div class="background-image">
@@ -60,32 +63,16 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Footer from '../components/Footer.vue';
 export default {
   components: {
     Footer,
   },
-  methods: {},
-  created() {
-    const options = {
-      method: 'GET',
-      url: 'https://juanroldan1989-moviequotes-v1.p.rapidapi.com/api/v1/quotes',
-      params: { actor: 'Al Pacino' },
-      headers: {
-        Authorization: 'Token token=yd8WzkWNEEzGtqMSgiZBrwtt',
-        'X-RapidAPI-Host': 'netflix-unofficial.p.rapidapi.com',
-        'X-RapidAPI-Key': '1b92439fd4msh96b159053ca1286p1cb602jsn0e5f0fa8bed1',
-      },
-    };
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+  methods: {
+    handleLogout() {
+      localStorage.removeItem('TOKEN');
+      this.$router.push({ name: 'login-page' });
+    },
   },
 };
 </script>

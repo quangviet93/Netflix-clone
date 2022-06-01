@@ -43,7 +43,7 @@
                 v-model="password"
               />
             </div>
-            <button @click="handleLogin" class="form-btn">Sign In</button>
+            <button class="form-btn">Sign In</button>
           </form>
           <div class="form-redirect">
             <p>New to Netflix?</p>
@@ -67,8 +67,8 @@ import aipUser from '@/api/api_user.js';
 export default {
   data() {
     return {
-      username: [],
-      password: [],
+      username: '',
+      password: '',
     };
   },
   components: {
@@ -81,22 +81,24 @@ export default {
         password: this.password,
       };
       if (this.username === '' || this.password === '') {
-        console.log('ahihi');
         alert('Không được để trống !');
         return;
       }
-      const allUser = await aipUser.getAllUser();
-      const authUser = allUser.data.allUser.find((e) => {
-        return (
-          e.username === dataUserInput.username &&
-          e.password === dataUserInput.password
-        );
-      });
-      if (!authUser) {
-        alert('Tên hoặc mật khẩu không đúng !');
-        return;
+      try {
+        const dataUser = await aipUser.login(dataUserInput);
+        if (dataUser.data.success === false) {
+          alert(dataUser.data.message);
+          return;
+        }
+        console.log('dataUser', dataUser);
+        const token = dataUser.data.accessToken;
+        const refreshToken = dataUser.data.accessToken;
+        localStorage.setItem('TOKEN', token);
+        localStorage.setItem('REFRESH_TOKEN', refreshToken);
+        this.$router.push({ name: 'home-page' });
+      } catch (error) {
+        console.log('error', error);
       }
-      this.$router.push('/home');
     },
   },
 };

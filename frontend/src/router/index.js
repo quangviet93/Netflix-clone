@@ -33,5 +33,16 @@ const router = new VueRouter({
   mode: 'history',
   routes,
 });
-
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('TOKEN');
+  if (!token) {
+    if (to.name === 'login-page') {
+      next();
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 export default router;
