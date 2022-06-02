@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axiosInstance from '../config/api_config';
 
 const getAllUser = () => {
-  const res = axios.get('http://localhost:3001/users/allUser');
-  return res;
+  return axiosInstance.get('/users/allUser');
 };
 const register = (dataUser) => {
-  const res = axios.post('http://localhost:3001/users/register', dataUser);
-  return res;
+  return axiosInstance.post('/users/register', dataUser);
 };
 const login = (dataUser) => {
-  const res = axios.post('http://localhost:3001/users/login', dataUser);
-  return res;
+  return axiosInstance.post('/users/login', dataUser);
 };
-export default { register, login, getAllUser };
+const createFilm = (data) => {
+  return axiosInstance.post('/movie/create', data);
+};
+export default { register, login, getAllUser, createFilm };

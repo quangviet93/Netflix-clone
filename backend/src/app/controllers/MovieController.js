@@ -2,6 +2,7 @@ const Movie = require("../models/Movie");
 
 const MovieController = {
   create: async (req, res) => {
+    console.log("req", req.body);
     const dataMovie = req.body;
     const isExisted = await Movie.exists({ name: dataMovie.name });
     if (isExisted) {

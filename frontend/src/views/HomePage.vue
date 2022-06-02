@@ -68,11 +68,19 @@ export default {
   components: {
     Footer,
   },
+  data() {
+    return {
+      currentPath: window.location.hash,
+    };
+  },
   methods: {
     handleLogout() {
       localStorage.removeItem('TOKEN');
       this.$router.push({ name: 'login-page' });
     },
+  },
+  created() {
+    console.log('abc', this.$router.currentRoute.path);
   },
 };
 </script>

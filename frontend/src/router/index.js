@@ -27,6 +27,12 @@ const routes = [
     meta: { title: 'NetFlix' },
     component: () => import('@/views/HomePage.vue'),
   },
+  {
+    path: '/admin/dashboard',
+    name: 'admin-dashboard',
+    meta: { title: 'Dashboard' },
+    component: () => import('@/views/admin/Dashboard.vue'),
+  },
 ];
 
 const router = new VueRouter({

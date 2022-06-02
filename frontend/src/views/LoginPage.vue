@@ -86,20 +86,30 @@ export default {
       }
       try {
         const dataUser = await aipUser.login(dataUserInput);
+        console.log('dataUser', dataUser);
         if (dataUser.data.success === false) {
           alert(dataUser.data.message);
           return;
         }
-        console.log('dataUser', dataUser);
         const token = dataUser.data.accessToken;
         const refreshToken = dataUser.data.accessToken;
         localStorage.setItem('TOKEN', token);
         localStorage.setItem('REFRESH_TOKEN', refreshToken);
-        this.$router.push({ name: 'home-page' });
+        if (dataUser.data.user.role === 'user') {
+          this.$router.push({ name: 'home-page' });
+        } else if (dataUser.data.user.role === 'admin') {
+          this.$router.push({ name: 'admin-dashboard' });
+        }
       } catch (error) {
         console.log('error', error);
       }
     },
+  },
+  created() {
+    const token = localStorage.getItem('TOKEN');
+    if (token) {
+      this.$router.push({ name: 'home-page' });
+    }
   },
 };
 </script>

@@ -27,7 +27,7 @@
       <div class="login-form">
         <div class="form-main">
           <h1>Sign Up</h1>
-          <form @click.self.prevent>
+          <form @submit.prevent="handleRegister">
             <div class="form-input">
               <input type="text" placeholder="UserName" v-model="username" />
             </div>
@@ -50,7 +50,7 @@
                 v-model="confirmPassword"
               />
             </div>
-            <button @click="handleLogin" class="form-btn">Register</button>
+            <button class="form-btn">Register</button>
           </form>
         </div>
       </div>
@@ -77,9 +77,7 @@ export default {
     Footer,
   },
   methods: {
-    async handleLogin(e) {
-      e.preventDefault();
-
+    async handleRegister() {
       if (
         this.username === '' ||
         this.fullName === '' ||
@@ -112,6 +110,12 @@ export default {
         (this.confirmPassword = '');
       this.$router.push('/login');
     },
+  },
+  created() {
+    const token = localStorage.getItem('TOKEN');
+    if (token) {
+      this.$router.push({ name: 'home-page' });
+    }
   },
 };
 </script>
