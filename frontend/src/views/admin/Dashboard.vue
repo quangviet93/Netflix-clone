@@ -14,11 +14,27 @@
         </div>
         <div class="form-input">
           <label for="genre">Genre :</label>
-          <input type="text" placeholder="Genre" v-model="genre" />
+          <select v-model="genresUser" name="genre" id="genre">
+            <option
+              v-for="genre in genres"
+              v-bind:key="genre._id"
+              :value="genre._id"
+            >
+              {{ genre.name }}
+            </option>
+          </select>
         </div>
         <div class="form-input">
           <label for="actor">Actor :</label>
-          <input type="text" placeholder="Actor" v-model="actor" />
+          <select v-model="actorsUser" name="actor" id="actor">
+            <option
+              v-for="actor in actors"
+              v-bind:key="actor._id"
+              :value="actor._id"
+            >
+              {{ actor.name }}
+            </option>
+          </select>
         </div>
         <div class="form-input">
           <label for="thumbnail">Thumbnail :</label>
@@ -42,20 +58,24 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
-import apiUser from '@/api/api_user.js';
+import Header from "../../components/Header.vue";
+import Footer from "../../components/Footer.vue";
+import apiUser from "@/api/api_user.js";
+import apiActor from "@/api/api_actor.js";
+import apiGenre from "@/api/api_genre.js";
 
 export default {
   data() {
     return {
-      name: '',
-      description: '',
-      genre: '',
-      actor: '',
-      thumbnail: '',
-      video: '',
-      trailer: '',
+      name: "",
+      description: "",
+      genres: [],
+      actors: [],
+      genresUser: "",
+      actorsUser: "",
+      thumbnail: "",
+      video: "",
+      trailer: "",
     };
   },
   components: {
@@ -67,19 +87,33 @@ export default {
       const dataUserInput = {
         name: this.name,
         description: this.description,
-        genre: this.genre.split(','),
-        actor: this.actor.split(','),
+        genre: [this.genresUser],
+        actor: [this.actorsUser],
         thumbnail: this.thumbnail,
         video: this.video,
         trailer: this.trailer,
       };
       try {
         const data = await apiUser.createFilm(dataUserInput);
-        console.log('data', data);
+        console.log("data", data);
       } catch (error) {
         console.log(error);
       }
     },
+    async getActors() {
+      const dataActor = await apiActor.getAll();
+      this.actors = dataActor.data.allActor;
+    },
+    async getGenre() {
+      const dataGenres = await apiGenre.getAll();
+      this.genres = dataGenres.data.allGenre;
+    },
+  },
+  created() {
+    this.getActors();
+    this.getGenre();
+    console.log(this);
+    console.log(this.genres);
   },
 };
 </script>

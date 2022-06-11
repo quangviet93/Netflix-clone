@@ -38,7 +38,13 @@
         <a href="">Sản xuất tại Hàn Quốc</a>
       </h2>
       <div class="row-film">
-        <div class="film-item">
+        <div v-for="(movie, index) in allMovie" :key="index" class="film-item">
+          <input type="file" />
+
+          <img :src="movie.video" />
+          <a :href="movie.video"
+            ><p>{{ movie.name }}</p></a
+          >
           <a href="">
             <img
               src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABefqKmeCaT8B2S7lyyZX6CCiZ-FemeTW15nW8tgDv4hzXahaWIJcJUAatd-02PtHBXl2dM_9lNJj5l_HY_pjjUdCqP7SK2jobw_Rv2eq05JkFkomZBfodSoJ--beNX_kScXB.jpg?r=e3d"
@@ -63,7 +69,9 @@
 </template>
 
 <script>
-import Footer from '../components/Footer.vue';
+import Footer from "../components/Footer.vue";
+import aipMovie from "@/api/api_movie.js";
+
 export default {
   components: {
     Footer,
@@ -71,16 +79,27 @@ export default {
   data() {
     return {
       currentPath: window.location.hash,
+      allMovie: [],
     };
   },
   methods: {
     handleLogout() {
-      localStorage.removeItem('TOKEN');
-      this.$router.push({ name: 'login-page' });
+      localStorage.removeItem("TOKEN");
+      this.$router.push({ name: "login-page" });
+    },
+    async getAllMovie() {
+      try {
+        const allMovie = await aipMovie.getAllMovie();
+        this.allMovie = allMovie.data.dataMovie;
+        console.log(allMovie.data.dataMovie);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   created() {
-    console.log('abc', this.$router.currentRoute.path);
+    this.getAllMovie();
+    console.log("abc", this.allMovie);
   },
 };
 </script>
