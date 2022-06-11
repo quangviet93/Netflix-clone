@@ -1,6 +1,21 @@
 const Actor = require("../models/Actor");
 
 const ActorController = {
+  getAll: async (req, res) => {
+    try {
+      const allActor = await Actor.find();
+      res.json({
+        success: true,
+        message: "Get All Actor",
+        allActor: allActor,
+      });
+    } catch (error) {
+      res.json({
+        success: false,
+        message: error,
+      });
+    }
+  },
   create: async (req, res) => {
     const dataActor = req.body;
     const newActor = new Actor(dataActor);
