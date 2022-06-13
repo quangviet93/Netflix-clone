@@ -35,30 +35,22 @@
     </div>
     <div class="row-film-container">
       <h2>
-        <a href="">Sản xuất tại Hàn Quốc</a>
+        <a href="">Sản xuất tại Việt Nam</a>
       </h2>
       <div class="row-film">
         <div v-for="(movie, index) in allMovie" :key="index" class="film-item">
-          <input type="file" />
-
-          <img :src="movie.video" />
-          <a :href="movie.video"
-            ><p>{{ movie.name }}</p></a
-          >
-          <a href="">
-            <img
-              src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABefqKmeCaT8B2S7lyyZX6CCiZ-FemeTW15nW8tgDv4hzXahaWIJcJUAatd-02PtHBXl2dM_9lNJj5l_HY_pjjUdCqP7SK2jobw_Rv2eq05JkFkomZBfodSoJ--beNX_kScXB.jpg?r=e3d"
-              alt=""
-            />
-          </a>
-        </div>
-        <div class="film-item">
-          <a href="">
-            <img
-              src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABZNsQHOP22N7o-MEQqvqhrb7RW4z9S7OfXy_DuEztAmXn6sTUX_E0m_yPPgLhW9xYoRIFTDvL-5TKqDPRaYjU70jDAveV8-4sJYAwU3CQmNPA-gJTefzR5B5CeC3QSnYYCnXkmO7Hl-Czd74rdXBeiFxM9lINFe4DRSJOtKduNpxMCKPPqyBIeat1dWR-ls.jpg?r=001"
-              alt=""
-            />
-          </a>
+          <div class="film-item">
+            <iframe
+              width="560"
+              height="315"
+              :src="movie.video"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+            <p>{{ movie.name }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -69,8 +61,8 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
-import aipMovie from "@/api/api_movie.js";
+import Footer from '../components/Footer.vue';
+import aipMovie from '@/api/api_movie.js';
 
 export default {
   components: {
@@ -84,14 +76,13 @@ export default {
   },
   methods: {
     handleLogout() {
-      localStorage.removeItem("TOKEN");
-      this.$router.push({ name: "login-page" });
+      localStorage.removeItem('TOKEN');
+      this.$router.push({ name: 'login-page' });
     },
     async getAllMovie() {
       try {
         const allMovie = await aipMovie.getAllMovie();
         this.allMovie = allMovie.data.dataMovie;
-        console.log(allMovie.data.dataMovie);
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +90,6 @@ export default {
   },
   created() {
     this.getAllMovie();
-    console.log("abc", this.allMovie);
   },
 };
 </script>
