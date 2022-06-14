@@ -37,6 +37,9 @@ export default {};
     a {
       color: #757575;
       text-decoration: none;
+      &:hover {
+        color: #ffffff;
+      }
     }
   }
 }
