@@ -36,8 +36,8 @@
         <div v-for="(movie, index) in allMovie" :key="index" class="film-item">
           <div class="film-item">
             <iframe
-              width="560"
-              height="315"
+              width="300"
+              height="215"
               :src="movie.video"
               title="YouTube video player"
               frameborder="0"
@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import Footer from '../components/Footer.vue';
-import aipMovie from '@/api/api_movie.js';
+import Footer from "../components/Footer.vue";
+import aipMovie from "@/api/api_movie.js";
 
 export default {
   components: {
@@ -71,8 +71,8 @@ export default {
   },
   methods: {
     handleLogout() {
-      localStorage.removeItem('TOKEN');
-      this.$router.push({ name: 'login-page' });
+      localStorage.removeItem("TOKEN");
+      this.$router.push({ name: "login-page" });
     },
     async getAllMovie() {
       try {
@@ -169,6 +169,7 @@ export default {
   .row-film {
     display: flex;
     padding: 0 60px;
+    flex-wrap: wrap;
     .film-item {
       padding: 0 5px;
     }

@@ -95,9 +95,11 @@ export default {
       };
       try {
         const data = await apiUser.createFilm(dataUserInput);
+        alert("Create Film successful !");
         console.log("data", data);
       } catch (error) {
         console.log(error);
+        alert("Create Film fail !");
       }
     },
     async getActors() {

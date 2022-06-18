@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Genre = new Schema(
   {
-    name: { type: String, require: true },
+    name: { type: String, require: true, default: "Unknown" },
   },
   {
     timestamps: true,

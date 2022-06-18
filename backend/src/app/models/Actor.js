@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const Actor = new Schema(
   {
-    name: { type: String, require: true },
-    birthday: { type: String, require: true },
-    nationality: { type: String, require: true },
+    name: { type: String, require: true, default: "Unknown" },
+    birthday: { type: String, require: true, default: "Unknown" },
+    nationality: { type: String, require: true, default: "Unknown" },
   },
   {
     timestamps: true,

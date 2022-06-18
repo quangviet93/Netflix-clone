@@ -62,13 +62,13 @@
 </template>
 
 <script>
-import Footer from '../components/Footer.vue';
-import aipUser from '@/api/api_user.js';
+import Footer from "../components/Footer.vue";
+import aipUser from "@/api/api_user.js";
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     };
   },
   components: {
@@ -80,35 +80,35 @@ export default {
         username: this.username,
         password: this.password,
       };
-      if (this.username === '' || this.password === '') {
-        alert('Không được để trống !');
+      if (this.username === "" || this.password === "") {
+        alert("Không được để trống !");
         return;
       }
       try {
         const dataUser = await aipUser.login(dataUserInput);
-        console.log('dataUser', dataUser);
+        console.log("dataUser", dataUser.data.success);
         if (dataUser.data.success === false) {
           alert(dataUser.data.message);
           return;
         }
         const token = dataUser.data.accessToken;
         const refreshToken = dataUser.data.accessToken;
-        localStorage.setItem('TOKEN', token);
-        localStorage.setItem('REFRESH_TOKEN', refreshToken);
-        if (dataUser.data.user.role === 'user') {
-          this.$router.push({ name: 'home-page' });
-        } else if (dataUser.data.user.role === 'admin') {
-          this.$router.push({ name: 'admin-dashboard' });
+        localStorage.setItem("TOKEN", token);
+        localStorage.setItem("REFRESH_TOKEN", refreshToken);
+        if (dataUser.data.user.role === "user") {
+          this.$router.push({ name: "home-page" });
+        } else if (dataUser.data.user.role === "admin") {
+          this.$router.push({ name: "admin-dashboard" });
         }
       } catch (error) {
-        console.log('error', error);
+        console.log("error", error);
       }
     },
   },
   created() {
-    const token = localStorage.getItem('TOKEN');
+    const token = localStorage.getItem("TOKEN");
     if (token) {
-      this.$router.push({ name: 'home-page' });
+      this.$router.push({ name: "home-page" });
     }
   },
 };
