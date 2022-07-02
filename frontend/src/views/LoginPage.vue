@@ -86,7 +86,6 @@ export default {
       }
       try {
         const dataUser = await aipUser.login(dataUserInput);
-        console.log("dataUser", dataUser.data.success);
         if (dataUser.data.success === false) {
           alert(dataUser.data.message);
           return;
