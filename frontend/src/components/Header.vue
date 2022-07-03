@@ -32,9 +32,7 @@ export default {
   data() {
     return {};
   },
-  created() {
-    console.log('abc', this.$router.currentRoute.path);
-  },
+  created() {},
 };
 </script>
 

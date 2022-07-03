@@ -29,10 +29,17 @@ export default {};
   max-width: 1000px;
   margin: 0 auto;
   .footer-container {
-    padding: 70px 45px;
+    padding: 10px 50px 30px 50px;
     color: #757575;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     ul {
+      display: flex;
+      gap: 30px;
       list-style-type: none;
+      margin: 0;
+      padding: 0;
     }
     a {
       color: #757575;
