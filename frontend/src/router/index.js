@@ -28,10 +28,28 @@ const routes = [
     component: () => import('@/views/HomePage.vue'),
   },
   {
-    path: '/admin/dashboard',
-    name: 'admin-dashboard',
-    meta: { title: 'Dashboard' },
-    component: () => import('@/views/admin/Dashboard.vue'),
+    path: '/admin',
+    component: () => import('@/views/admin/Layout.vue'),
+    children: [
+      {
+        path: '/admin/dashboard',
+        name: 'admin-dashboard',
+        meta: { title: 'Dashboard' },
+        component: () => import('@/views/admin/Dashboard.vue'),
+      },
+      {
+        path: '/admin/movie',
+        name: 'admin-movie',
+        meta: { title: 'Movie' },
+        component: () => import('@/views/admin/Dashboard.vue'),
+      },
+      {
+        path: '/admin/movie/add',
+        name: 'admin-add-movie',
+        meta: { title: 'Add movie' },
+        component: () => import('@/views/admin/Dashboard.vue'),
+      },
+    ]
   },
 ];
 

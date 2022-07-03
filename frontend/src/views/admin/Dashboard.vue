@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <div>
       <form @submit.prevent="createFilm" class="create-input">
         <div class="title">Create Film</div>
@@ -53,13 +52,10 @@
         </div>
       </form>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Header from "../../components/Header.vue";
-import Footer from "../../components/Footer.vue";
 import apiUser from "@/api/api_user.js";
 import apiActor from "@/api/api_actor.js";
 import apiGenre from "@/api/api_genre.js";
@@ -77,10 +73,6 @@ export default {
       video: "",
       trailer: "",
     };
-  },
-  components: {
-    Header,
-    Footer,
   },
   methods: {
     async createFilm() {
@@ -114,8 +106,6 @@ export default {
   created() {
     this.getActors();
     this.getGenre();
-    console.log(this);
-    console.log(this.genres);
   },
 };
 </script>
