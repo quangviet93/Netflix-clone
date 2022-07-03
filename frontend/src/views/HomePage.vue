@@ -17,6 +17,11 @@
               </g>
             </svg>
           </a>
+          <ul class="header-tag">
+            <li><a href="/">Trang Chủ</a></li>
+            <li><a href="/">Phim T.hình</a></li>
+            <li><a href="/">Mới & Phổ biến</a></li>
+          </ul>
         </div>
         <div class="header-login-logout">
           <div class="header-login-logout">Avatar</div>
@@ -24,29 +29,35 @@
         </div>
       </div>
     </div>
-    <div class="background-image">
-      <img src="../assets/image-backgroup/backgroup1.jpg" alt="" />
-      <div class="concord-img-gradient"></div>
+    <div class="traler-banner">
+      <video autoplay muted loop id="myVideo">
+        <source
+          src="https://res.cloudinary.com/quangviet93/video/upload/v1656731365/Netfix/y2mate.com_-_%C4%90en_L%E1%BB%91i_Nh%E1%BB%8F_ft_Ph%C6%B0%C6%A1ng_Anh_%C4%90%C3%A0o_MV_720p_xjt6px.mp4"
+          type="video/mp4"
+        />
+        Your browser does not support HTML5 video.
+      </video>
+
+      <div class="content">
+        <h1>Lối Nhỏ - Đen Vau</h1>
+        <button id="myBtn" @click="myFunction">Pause</button>
+      </div>
     </div>
-    <div class="row-film-container">
-      <h2 class="row-film-title">
-        <a href="">Sản xuất tại Việt Nam</a>
-      </h2>
-      <div class="row-film">
-        <div v-for="(movie, index) in allMovie" :key="index" class="film-item">
-          <div class="film-item">
-            <iframe
-              width="300"
-              height="215"
-              :src="movie.video"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-            <p>{{ movie.name }}</p>
+    <div class="row-film">
+      <div>
+        <p>abc</p>
+      </div>
+      <div class="container-film">
+        <carousel v-for="(movie, index) in allMovie" :key="index" :items="4">
+          <div class="carousel">
+            <a href="">
+              <img
+                class="carousel-img"
+                src="https://res.cloudinary.com/quangviet93/image/upload/v1656732690/Netfix/image/Money-Heist-Season-4_yzhvbx.png"
+              />
+            </a>
           </div>
-        </div>
+        </carousel>
       </div>
     </div>
     <div class="footer-login">
@@ -56,11 +67,13 @@
 </template>
 
 <script>
+import carousel from "vue-owl-carousel";
 import Footer from "../components/Footer.vue";
 import aipMovie from "@/api/api_movie.js";
 
 export default {
   components: {
+    carousel,
     Footer,
   },
   data() {
@@ -74,9 +87,22 @@ export default {
       localStorage.removeItem("TOKEN");
       this.$router.push({ name: "login-page" });
     },
+
+    myFunction() {
+      var video = document.getElementById("myVideo");
+      var btn = document.getElementById("myBtn");
+      if (video.paused) {
+        video.play();
+        btn.innerHTML = "Pause";
+      } else {
+        video.pause();
+        btn.innerHTML = "Play";
+      }
+    },
     async getAllMovie() {
       try {
         const allMovie = await aipMovie.getAllMovie();
+        console.log("allMovie", allMovie);
         this.allMovie = allMovie.data.dataMovie;
       } catch (error) {
         console.log(error);
@@ -90,19 +116,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.traler-banner {
+  position: relative;
+}
+#myVideo {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content {
+  position: absolute;
+  bottom: 0;
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+#myBtn {
+  width: 80px;
+  font-size: 18px;
+  height: 40px;
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
 .background-image {
   height: unset !important;
 }
+.slide-film {
+  display: flex;
+}
+.owl-item {
+  width: 100% !important;
+}
+.container-film {
+  display: flex;
+}
 .header-netflix {
-  position: relative;
+  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  margin-top: 20px;
-  margin-bottom: 50px;
   z-index: 10;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 10%,
+    rgba(0, 0, 0, 0)
+  );
   .container-header {
     display: flex;
     justify-content: space-between;
@@ -110,10 +177,27 @@ export default {
     padding-top: 10px;
     margin: 0 50px;
     .header-logo {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 13px;
+      .header-tag {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        margin: 0;
+        li:first-child {
+          font-weight: 600;
+        }
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
       a {
         svg {
-          height: 45px;
-          width: 167px;
+          height: 20px;
+          width: 80px;
           fill: #e50914;
           line-height: normal;
         }
@@ -123,12 +207,14 @@ export default {
       display: flex;
       color: #fff;
       gap: 30px;
+      font-size: 13px;
     }
   }
 }
 .home-netflix {
-  background-color: #000;
+  background-color: #141414;
   .background-image {
+    width: 100%;
     height: 747.766px;
     position: absolute;
     top: -100px;
@@ -157,8 +243,9 @@ export default {
   }
 }
 .row-film-container {
+  width: 100%;
   position: relative;
-  padding-top: 50px;
+  padding: 10px 50px;
   .row-film-title {
     margin-bottom: 30px;
   }
@@ -168,17 +255,24 @@ export default {
   }
   .row-film {
     display: flex;
-    padding: 0 60px;
-    flex-wrap: wrap;
+    gap: 10px;
+    overflow-x: hidden;
     .film-item {
-      padding: 0 5px;
+      min-width: 25%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 3px;
+      }
+      a {
+        display: block;
+      }
     }
   }
 }
 
 .footer-login {
-  position: absolute;
-  bottom: 0;
   width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard">
     <Header />
     <div>
       <form @submit.prevent="createFilm" class="create-input">
@@ -120,6 +120,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.dashboard {
+  background: black;
+}
 .create-input {
   max-width: 1000px;
   margin: 0 auto;
