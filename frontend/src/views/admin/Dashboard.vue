@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD
-  <div class="dashboard">
-    <Header />
-=======
   <div>
->>>>>>> 1ee7ac2184e1d85f087c00821066a2fd0c8d0365
     <div>
       <form @submit.prevent="createFilm" class="create-input">
         <div class="title">Create Film</div>
@@ -61,22 +56,22 @@
 </template>
 
 <script>
-import apiUser from "@/api/api_user.js";
-import apiActor from "@/api/api_actor.js";
-import apiGenre from "@/api/api_genre.js";
+import apiUser from '@/api/api_user.js';
+import apiActor from '@/api/api_actor.js';
+import apiGenre from '@/api/api_genre.js';
 
 export default {
   data() {
     return {
-      name: "",
-      description: "",
+      name: '',
+      description: '',
       genres: [],
       actors: [],
-      genresUser: "",
-      actorsUser: "",
-      thumbnail: "",
-      video: "",
-      trailer: "",
+      genresUser: '',
+      actorsUser: '',
+      thumbnail: '',
+      video: '',
+      trailer: '',
     };
   },
   methods: {
@@ -92,11 +87,11 @@ export default {
       };
       try {
         const data = await apiUser.createFilm(dataUserInput);
-        alert("Create Film successful !");
-        console.log("data", data);
+        alert('Create Film successful !');
+        console.log('data', data);
       } catch (error) {
         console.log(error);
-        alert("Create Film fail !");
+        alert('Create Film fail !');
       }
     },
     async getActors() {
