@@ -9,6 +9,7 @@ const JWTAuthMiddleware = {
       const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
       if (data) {
         const user = await User.findOne({ username: data.username });
+        user.password = undefined;
         req.user = user;
         next();
       }

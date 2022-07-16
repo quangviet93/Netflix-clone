@@ -169,12 +169,6 @@ export default {
     Header,
     Footer,
   },
-  created() {
-    const token = localStorage.getItem('TOKEN');
-    if (token) {
-      this.$router.push({ name: 'home-page' });
-    }
-  },
 };
 </script>
 <style lang="scss" scoped>

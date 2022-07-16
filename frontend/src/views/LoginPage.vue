@@ -63,7 +63,9 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-import aipUser from "@/api/api_user.js";
+import apiUser from "@/api/api_user.js";
+import { mapActions } from 'vuex'
+import userActions from '@/store/modules/user/actionTypes';
 export default {
   data() {
     return {
@@ -75,6 +77,9 @@ export default {
     Footer,
   },
   methods: {
+    ...mapActions({
+      login: userActions.ACT_LOGIN,
+    }),
     async handleLogin() {
       const dataUserInput = {
         username: this.username,
@@ -85,15 +90,16 @@ export default {
         return;
       }
       try {
-        const dataUser = await aipUser.login(dataUserInput);
+        const dataUser = await apiUser.login(dataUserInput);
         if (dataUser.data.success === false) {
           alert(dataUser.data.message);
           return;
         }
-        const token = dataUser.data.accessToken;
-        const refreshToken = dataUser.data.accessToken;
-        localStorage.setItem("TOKEN", token);
-        localStorage.setItem("REFRESH_TOKEN", refreshToken);
+        const token = {
+          accessToken: dataUser.data.accessToken,
+          refreshToken: dataUser.data.refreshToken
+        }
+        this.login({ user: dataUser.data.user, token });
         if (dataUser.data.user.role === "user") {
           this.$router.push({ name: "home-page" });
         } else if (dataUser.data.user.role === "admin") {

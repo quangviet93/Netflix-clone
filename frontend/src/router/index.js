@@ -57,16 +57,22 @@ const router = new VueRouter({
   mode: 'history',
   routes,
 });
+
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('TOKEN');
   if (!token) {
-    if (to.name === 'login-page') {
+    if (to.name === 'login-page' || to.name === 'landing-page' ) {
       next();
+    } else {
+      next({ name: 'landing-page' });
+    }
+  } else {
+    if(to.name === 'landing-page') {
+      next({ name: 'home-page' });
     } else {
       next();
     }
-  } else {
-    next();
+    
   }
 });
 export default router;

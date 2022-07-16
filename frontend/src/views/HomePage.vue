@@ -52,8 +52,9 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-
 import aipMovie from "@/api/api_movie.js";
+import { mapActions } from 'vuex'
+import userActions from '@/store/modules/user/actionTypes';
 
 export default {
   components: {
@@ -66,8 +67,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      logout: userActions.ACT_LOGOUT
+    }),
     handleLogout() {
-      localStorage.removeItem("TOKEN");
+      this.logout();
       this.$router.push({ name: "login-page" });
     },
 
