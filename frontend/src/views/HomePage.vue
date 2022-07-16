@@ -43,30 +43,7 @@
         <button id="myBtn" @click="myFunction">Pause</button>
       </div>
     </div>
-    <div class="row-film">
-      <template>
-        <swiper
-          :slidesPerView="3"
-          :spaceBetween="30"
-          :freeMode="true"
-          :pagination="{
-            clickable: true,
-          }"
-          :modules="modules"
-          class="mySwiper"
-        >
-          <swiper-slide>Slide 1</swiper-slide>
-          <swiper-slide>Slide 2</swiper-slide>
-          <swiper-slide>Slide 3</swiper-slide>
-          <swiper-slide>Slide 4</swiper-slide>
-          <swiper-slide>Slide 5</swiper-slide>
-          <swiper-slide>Slide 6</swiper-slide>
-          <swiper-slide>Slide 7</swiper-slide>
-          <swiper-slide>Slide 8</swiper-slide>
-          <swiper-slide>Slide 9</swiper-slide>
-        </swiper>
-      </template>
-    </div>
+    <div class="row-film"></div>
     <div class="footer-login">
       <Footer />
     </div>
@@ -74,54 +51,41 @@
 </template>
 
 <script>
-import Footer from '../components/Footer.vue';
+import Footer from "../components/Footer.vue";
 
-import aipMovie from '@/api/api_movie.js';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Import Swiper styles
-import 'swiper/css';
-
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-
-// import required modules
-import { FreeMode, Pagination } from 'swiper';
+import aipMovie from "@/api/api_movie.js";
 
 export default {
   components: {
     Footer,
-    Swiper,
-    SwiperSlide,
   },
   data() {
     return {
       currentPath: window.location.hash,
       allMovie: [],
-      modules: [FreeMode, Pagination],
     };
   },
   methods: {
     handleLogout() {
-      localStorage.removeItem('TOKEN');
-      this.$router.push({ name: 'login-page' });
+      localStorage.removeItem("TOKEN");
+      this.$router.push({ name: "login-page" });
     },
 
     myFunction() {
-      var video = document.getElementById('myVideo');
-      var btn = document.getElementById('myBtn');
+      var video = document.getElementById("myVideo");
+      var btn = document.getElementById("myBtn");
       if (video.paused) {
         video.play();
-        btn.innerHTML = 'Pause';
+        btn.innerHTML = "Pause";
       } else {
         video.pause();
-        btn.innerHTML = 'Play';
+        btn.innerHTML = "Play";
       }
     },
     async getAllMovie() {
       try {
         const allMovie = await aipMovie.getAllMovie();
-        console.log('allMovie', allMovie.data);
+        console.log("allMovie", allMovie.data);
         this.allMovie = allMovie.data.dataMovie;
       } catch (error) {
         console.log(error);
