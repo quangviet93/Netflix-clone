@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const { hashPassword } = require("../helpers/Helper");
 const jwt = require("jsonwebtoken");
+const { response } = require("express");
 require("dotenv").config();
 
 const UserController = {
@@ -55,6 +56,9 @@ const UserController = {
       });
     }
   },
+  getProfile: (req, res) => {
+    res.json(req.user);
+  }
 };
 
 module.exports = UserController;

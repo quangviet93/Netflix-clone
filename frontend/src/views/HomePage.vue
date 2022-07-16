@@ -57,11 +57,13 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-import SlideFilm from "../components/SlideFilm.vue";
 
+
+import { mapActions } from 'vuex'
+import userActions from '@/store/modules/user/actionTypes';
+import SlideFilm from "../components/SlideFilm.vue";
 import apiMovie from "@/api/api_movie.js";
 import apiUser from "@/api/api_user.js";
-
 export default {
   components: {
     Footer,
@@ -74,8 +76,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      logout: userActions.ACT_LOGOUT
+    }),
     handleLogout() {
-      localStorage.removeItem("TOKEN");
+      this.logout();
       this.$router.push({ name: "login-page" });
     },
 

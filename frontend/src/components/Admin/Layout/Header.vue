@@ -17,23 +17,27 @@
           </svg>
         </router-link>
       </div>
-      <div
-        v-if="this.$router.currentRoute.path !== '/admin/dashboard'"
-        class="header-login-logout"
-      >
-        <a href="/login">Sign In</a>
-      </div>
+      <div class="logout-btn" @click="handleLogout">Logout</div>
     </div>
   </div>
 </template>
 
 <script>
+
+import { mapActions } from 'vuex'
+import userActions from '@/store/modules/user/actionTypes';
 export default {
   data() {
     return {};
   },
-  created() {
-    console.log('abc', this.$router.currentRoute.path);
+  methods: {
+    ...mapActions({
+      logout: userActions.ACT_LOGOUT
+    }),
+    handleLogout() {
+      this.logout();
+      this.$router.push({ name: 'landing-page' });
+    }
   },
 };
 </script>
@@ -56,6 +60,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin: 0 50px;
+    width: 100%;
     .header-logo a {
       fill: #e50914;
       line-height: normal;
@@ -63,14 +68,10 @@ export default {
         width: 40%;
       }
     }
-    .header-login-logout a {
-      background-color: #e50914;
-      color: #fff;
-      line-height: normal;
-      padding: 7px 17px;
-      font-weight: 400;
-      text-decoration: none;
-      border-radius: 3px;
+    .logout-btn {
+      cursor: pointer;
+      color: #FFF;
+      font-weight: bold;
     }
   }
 }

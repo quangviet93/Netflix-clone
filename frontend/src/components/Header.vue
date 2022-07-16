@@ -2,7 +2,7 @@
   <div class="header-netflix">
     <div class="container-header">
       <div class="header-logo">
-        <a href="/home">
+        <router-link to="/home">
           <svg
             viewBox="0 0 111 30"
             class="svg-icon svg-icon-netflix-logo"
@@ -15,13 +15,13 @@
               ></path>
             </g>
           </svg>
-        </a>
+        </router-link>
       </div>
       <div
         v-if="this.$router.currentRoute.path !== '/admin/dashboard'"
         class="header-login-logout"
       >
-        <a href="/login">Sign In</a>
+        <router-link to="/login">Sign In</router-link>
       </div>
     </div>
   </div>

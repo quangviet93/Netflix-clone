@@ -9,7 +9,12 @@ const register = (dataUser) => {
 const login = (dataUser) => {
   return axiosInstance.post('/users/login', dataUser);
 };
+
+const getProfile = () => {
+  return axiosInstance.get('/users/profile');
+}
+
 const createFilm = (data) => {
   return axiosInstance.post('/movie/create', data);
 };
-export default { register, login, getAllUser, createFilm };
+export default { register, login, getAllUser, getProfile, createFilm };
