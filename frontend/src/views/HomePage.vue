@@ -32,18 +32,23 @@
     <div class="traler-banner">
       <video autoplay muted loop id="myVideo">
         <source
-          src="https://res.cloudinary.com/quangviet93/video/upload/v1656731365/Netfix/y2mate.com_-_%C4%90en_L%E1%BB%91i_Nh%E1%BB%8F_ft_Ph%C6%B0%C6%A1ng_Anh_%C4%90%C3%A0o_MV_720p_xjt6px.mp4"
+          src="https://res.cloudinary.com/quangviet93/video/upload/v1657944051/Netfix/y2mate.com_-_REVIEW_PHIM_BI%E1%BB%86T_%C4%90%E1%BB%98I_SI%C3%8AU_ANH_H%C3%99NG_1_AVENGERS_SAKURA_REVIEW_360p_vstzxl.mp4"
           type="video/mp4"
         />
         Your browser does not support HTML5 video.
       </video>
 
       <div class="content">
-        <h1>Lối Nhỏ - Đen Vau</h1>
+        <h3>Biệt Đội Siêu Anh Hùng</h3>
         <button id="myBtn" @click="myFunction">Pause</button>
       </div>
     </div>
-    <div class="row-film"></div>
+    <div>
+      <div class="title-listFilm"><h2>Phim Mới</h2></div>
+      <div class="row-film">
+        <SlideFilm :listFilm="this.allMovie" />
+      </div>
+    </div>
     <div class="footer-login">
       <Footer />
     </div>
@@ -52,13 +57,17 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-import aipMovie from "@/api/api_movie.js";
+
+
 import { mapActions } from 'vuex'
 import userActions from '@/store/modules/user/actionTypes';
-
+import SlideFilm from "../components/SlideFilm.vue";
+import apiMovie from "@/api/api_movie.js";
+import apiUser from "@/api/api_user.js";
 export default {
   components: {
     Footer,
+    SlideFilm,
   },
   data() {
     return {
@@ -88,8 +97,9 @@ export default {
     },
     async getAllMovie() {
       try {
-        const allMovie = await aipMovie.getAllMovie();
-        console.log("allMovie", allMovie.data);
+        const allMovie = await apiMovie.getAllMovie();
+        const user = await apiUser.login();
+        console.log("user", user);
         this.allMovie = allMovie.data.dataMovie;
       } catch (error) {
         console.log(error);
@@ -137,14 +147,9 @@ export default {
 .background-image {
   height: unset !important;
 }
-.slide-film {
-  display: flex;
-}
-.owl-item {
-  width: 100% !important;
-}
-.container-film {
-  display: flex;
+.title-listFilm {
+  padding: 20px;
+  color: #fff;
 }
 .header-netflix {
   position: fixed;
