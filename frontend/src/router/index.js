@@ -47,9 +47,9 @@ const routes = [
         path: '/admin/movie/add',
         name: 'admin-add-movie',
         meta: { title: 'Add movie' },
-        component: () => import('@/views/admin/Dashboard.vue'),
+        component: () => import('@/views/admin/movie/CreateMovie.vue'),
       },
-    ]
+    ],
   },
 ];
 
@@ -61,18 +61,17 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('TOKEN');
   if (!token) {
-    if (to.name === 'login-page' || to.name === 'landing-page' ) {
+    if (to.name === 'login-page' || to.name === 'landing-page') {
       next();
     } else {
       next({ name: 'landing-page' });
     }
   } else {
-    if(to.name === 'landing-page') {
+    if (to.name === 'landing-page') {
       next({ name: 'home-page' });
     } else {
       next();
     }
-    
   }
 });
 export default router;

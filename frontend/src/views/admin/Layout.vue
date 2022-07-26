@@ -24,6 +24,7 @@ body {
 }
 .admin-container {
   background-color: #f4f6fa;
+  min-height: 100vh;
 }
 .content-page {
   height: 100%;
