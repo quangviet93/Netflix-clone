@@ -14,7 +14,7 @@
           @click="toggle"
         >
           <div>
-            <img :src="n.trailer" />
+            <img :src="n.thumbnail" />
           </div>
         </v-card>
       </v-slide-item>
@@ -24,7 +24,7 @@
 <script>
 export default {
   components: {},
-  props: ["listFilm"],
+  props: ['listFilm'],
   data() {
     return {};
   },
