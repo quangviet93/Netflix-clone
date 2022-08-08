@@ -46,7 +46,7 @@
     <div>
       <div class="title-listFilm"><h2>Phim Mới</h2></div>
       <div class="row-film">
-        <SlideFilm :listFilm="this.allMovie" />
+        <SlideFilm :listFilm="allMovieStore" />
       </div>
     </div>
     <div class="footer-login">
@@ -56,14 +56,14 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
+import Footer from '../components/Footer.vue';
 
-
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 import userActions from '@/store/modules/user/actionTypes';
-import SlideFilm from "../components/SlideFilm.vue";
-import apiMovie from "@/api/api_movie.js";
-import apiUser from "@/api/api_user.js";
+import movieActions from '@/store/modules/movie/actionTypes';
+import movieGetters from '@/store/modules/movie/getterTypes';
+import SlideFilm from '../components/SlideFilm.vue';
+import apiMovie from '@/api/api_movie.js';
 export default {
   components: {
     Footer,
@@ -72,35 +72,39 @@ export default {
   data() {
     return {
       currentPath: window.location.hash,
-      allMovie: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      allMovieStore: movieGetters.GET_ALL_MOVIE,
+    }),
   },
   methods: {
     ...mapActions({
-      logout: userActions.ACT_LOGOUT
+      logout: userActions.ACT_LOGOUT,
+      setAllMovie: movieActions.ACT_GET_ALL_MOVIE,
     }),
+
     handleLogout() {
       this.logout();
-      this.$router.push({ name: "login-page" });
+      this.$router.push({ name: 'login-page' });
     },
 
     myFunction() {
-      var video = document.getElementById("myVideo");
-      var btn = document.getElementById("myBtn");
+      var video = document.getElementById('myVideo');
+      var btn = document.getElementById('myBtn');
       if (video.paused) {
         video.play();
-        btn.innerHTML = "Pause";
+        btn.innerHTML = 'Pause';
       } else {
         video.pause();
-        btn.innerHTML = "Play";
+        btn.innerHTML = 'Play';
       }
     },
     async getAllMovie() {
       try {
         const allMovie = await apiMovie.getAllMovie();
-        const user = await apiUser.login();
-        console.log("user", user);
-        this.allMovie = allMovie.data.dataMovie;
+        this.setAllMovie(allMovie.data.dataMovie);
       } catch (error) {
         console.log(error);
       }

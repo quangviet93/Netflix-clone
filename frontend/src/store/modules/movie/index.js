@@ -3,11 +3,11 @@ import mutations from './mutations';
 import actions from './actions';
 import state from './state';
 
-const userModule = {
+const movieModule = {
   state,
   getters,
   actions,
   mutations,
 };
 
-export default userModule;
+export default movieModule;

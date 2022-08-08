@@ -1,7 +1,9 @@
-import axiosInstance from "../config/api_config";
+import axiosInstance from '../config/api_config';
 
 const getAllMovie = () => {
-  return axiosInstance.get("/movie/all");
+  return axiosInstance.get('/movie/all');
 };
-
-export default { getAllMovie };
+const createMovie = (data) => {
+  return axiosInstance.post('/movie/create', data);
+};
+export default { getAllMovie, createMovie };
