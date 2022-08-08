@@ -7,7 +7,6 @@
           <v-text-field
             label="Name :"
             v-model="name"
-            :rules="rules"
             hide-details="auto"
           ></v-text-field>
         </div>
@@ -15,7 +14,6 @@
           <v-text-field
             label="Description :"
             v-model="description"
-            :rules="rules"
             hide-details="auto"
           ></v-text-field>
         </div>
@@ -51,7 +49,7 @@
             truncate-length="15"
             type="file"
             accept="image/*"
-            @change="handleVideo"
+            @change="handleVideo($event, 'thumbnail')"
             name="thumbnail"
           ></v-file-input>
         </div>
@@ -61,7 +59,7 @@
             label="Video :"
             truncate-length="15"
             type="file"
-            @change="handleVideo"
+            @change="handleVideo($event, 'video')"
             name="video"
           ></v-file-input>
         </div>
@@ -71,7 +69,7 @@
             label="Trailer :"
             truncate-length="15"
             type="file"
-            @change="handleVideo"
+            @change="handleVideo($event, 'trailer')"
             name="trailer"
           ></v-file-input>
         </div>
@@ -84,10 +82,10 @@
 </template>
 
 <script>
-import apiUser from '@/api/api_user.js';
 import apiActor from '@/api/api_actor.js';
 import apiGenre from '@/api/api_genre.js';
 import apiUpload from '@/api/api_cloudinary.js';
+import apiMovie from '@/api/api_movie.js';
 
 export default {
   data() {
@@ -104,13 +102,14 @@ export default {
     };
   },
   methods: {
-    handleVideo(e) {
-      if (e.target.name === 'video') {
-        this.video = e.target.files[0];
-      } else if (e.target.name === 'trailer') {
-        this.trailer = e.target.files[0];
-      } else if (e.target.name === 'thumbnail') {
-        this.thumbnail = e.target.files[0];
+    handleVideo(e, name) {
+      console.log('e', e, name);
+      if (name === 'video') {
+        this.video = e;
+      } else if (name === 'trailer') {
+        this.trailer = e;
+      } else if (name === 'thumbnail') {
+        this.thumbnail = e;
       }
     },
     async createFilm() {
@@ -133,7 +132,8 @@ export default {
         dataUserInput.video = res1.data.url;
         dataUserInput.trailer = res2.data.url;
         dataUserInput.thumbnail = res3.data.url;
-        await apiUser.createFilm(dataUserInput);
+        await apiMovie.createMovie(dataUserInput);
+        await apiMovie.getAllMovie();
         alert('Create Film successful !');
       } catch (error) {
         console.log(error);
@@ -143,7 +143,6 @@ export default {
     async getActors() {
       const dataActor = await apiActor.getAll();
       this.actors = dataActor.data.allActor;
-      console.log(this.actors);
     },
     async getGenre() {
       const dataGenres = await apiGenre.getAll();

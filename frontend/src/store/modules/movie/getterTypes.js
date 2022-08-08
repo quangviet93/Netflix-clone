@@ -1,5 +1,5 @@
 const getterTypes = {
-  GET_AUTH_USER: 'user/GET_AUTH_USER',
+  GET_ALL_MOVIE: 'movie/GET_ALL_MOVIE',
 };
 
 export default getterTypes;

@@ -12,9 +12,6 @@ const login = (dataUser) => {
 
 const getProfile = () => {
   return axiosInstance.get('/users/profile');
-}
-
-const createFilm = (data) => {
-  return axiosInstance.post('/movie/create', data);
 };
-export default { register, login, getAllUser, getProfile, createFilm };
+
+export default { register, login, getAllUser, getProfile };
