@@ -6,22 +6,22 @@
         <div class="form-input">
           <v-text-field
             label="Name :"
-            v-model="name"
+            v-model="dataUserInput.name"
             hide-details="auto"
           ></v-text-field>
         </div>
         <div class="form-input">
           <v-text-field
             label="Description :"
-            v-model="description"
+            v-model="dataUserInput.description"
             hide-details="auto"
           ></v-text-field>
         </div>
         <div class="form-input">
           <v-select
             label="Genre :"
-            v-model="genresUser"
-            :items="genres"
+            v-model="dataUserInput.genres"
+            :items="genresUser"
             item-text="name"
             item-value="_id"
             attach
@@ -32,8 +32,8 @@
         <div class="form-input">
           <v-select
             label="Actor :"
-            v-model="actorsUser"
-            :items="actors"
+            v-model="dataUserInput.actors"
+            :items="actorsUser"
             item-text="name"
             item-value="_id"
             attach
@@ -74,7 +74,16 @@
           ></v-file-input>
         </div>
         <div class="form-btn">
-          <button>Submit</button>
+          <v-btn
+            type="submit"
+            :loading="loading"
+            :disabled="loading"
+            color="blue-grey"
+            class="ma-2 white--text"
+          >
+            Upload
+            <v-icon right dark>mdi-cloud-upload</v-icon>
+          </v-btn>
         </div>
       </form>
     </div>
@@ -90,63 +99,85 @@ import apiMovie from '@/api/api_movie.js';
 export default {
   data() {
     return {
-      name: '',
-      description: '',
-      genres: [],
-      actors: [],
-      genresUser: '',
+      dataUserInput: {
+        name: '',
+        description: '',
+        genres: [],
+        actors: [],
+        thumbnail: '',
+        video: null,
+        trailer: null,
+      },
+      genresUser: [],
       actorsUser: [],
-      thumbnail: '',
-      video: null,
-      trailer: null,
+      loader: null,
+      loading: false,
     };
+  },
+  watch: {
+    loader() {
+      this.loading = false;
+    },
   },
   methods: {
     handleVideo(e, name) {
-      console.log('e', e, name);
       if (name === 'video') {
-        this.video = e;
+        this.dataUserInput.video = e;
       } else if (name === 'trailer') {
-        this.trailer = e;
+        this.dataUserInput.trailer = e;
       } else if (name === 'thumbnail') {
-        this.thumbnail = e;
+        this.dataUserInput.thumbnail = e;
+      }
+    },
+    validateForm() {
+      const { name, description, genres, actors, thumbnail, video, trailer } =
+        this.dataUserInput;
+      if (
+        !!name ||
+        !!description ||
+        !!genres ||
+        !!actors ||
+        !!thumbnail ||
+        !!video ||
+        !!trailer
+      ) {
+        return true;
+      } else {
+        return false;
       }
     },
     async createFilm() {
-      const dataUserInput = {
-        name: this.name,
-        description: this.description,
-        genre: [this.genresUser],
-        actor: [this.actorsUser],
-        thumbnail: this.thumbnail,
-        video: this.video,
-        trailer: this.trailer,
-      };
-      try {
-        console.log('dataUserInput', dataUserInput);
-        const [res1, res2, res3] = await Promise.all([
-          apiUpload.uploadToCloudinary(this.video, 'video'),
-          apiUpload.uploadToCloudinary(this.trailer, 'video'),
-          apiUpload.uploadToCloudinary(this.thumbnail, 'image'),
-        ]);
-        dataUserInput.video = res1.data.url;
-        dataUserInput.trailer = res2.data.url;
-        dataUserInput.thumbnail = res3.data.url;
-        await apiMovie.createMovie(dataUserInput);
-        await apiMovie.getAllMovie();
-        alert('Create Film successful !');
-      } catch (error) {
-        console.log(error);
-        alert('Create Film fail !');
+      if (this.validateForm()) {
+        this.loading = true;
+        try {
+          const [res1, res2, res3] = await Promise.all([
+            apiUpload.uploadToCloudinary(this.dataUserInput.video, 'video'),
+            apiUpload.uploadToCloudinary(this.dataUserInput.trailer, 'video'),
+            apiUpload.uploadToCloudinary(this.dataUserInput.thumbnail, 'image'),
+          ]);
+          this.dataUserInput.video = res1.data.url;
+          this.dataUserInput.trailer = res2.data.url;
+          this.dataUserInput.thumbnail = res3.data.url;
+          await apiMovie.createMovie(this.dataUserInput);
+          await apiMovie.getAllMovie();
+          alert('Create Film successful !');
+        } catch (error) {
+          console.log(error);
+          alert('Create Film fail !');
+        } finally {
+          this.loading = false;
+        }
+      } else {
+        alert('validate không thành công !');
       }
     },
     async getActors() {
       const dataActor = await apiActor.getAll();
-      this.actors = dataActor.data.allActor;
+      this.actorsUser = dataActor.data.allActor;
     },
     async getGenre() {
       const dataGenres = await apiGenre.getAll();
-      this.genres = dataGenres.data.allGenre;
+      this.genresUser = dataGenres.data.allGenre;
     },
   },
   created() {
@@ -197,12 +228,12 @@ export default {
     display: flex;
     justify-content: flex-end;
   }
-  button {
+  .form-btn button {
     border-radius: 4px;
     font-size: 16px;
     font-weight: 700;
     margin: 24px 0 12px;
-    background: #e50914;
+    background-color: #e50914;
     color: #fff;
     min-width: 98px;
     min-height: 55px;

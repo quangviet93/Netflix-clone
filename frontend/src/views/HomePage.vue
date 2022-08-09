@@ -24,6 +24,23 @@
           </ul>
         </div>
         <div class="header-login-logout">
+          <div
+            v-click-outside="hide"
+            @click="toggle"
+            class="header-search-input"
+            :class="{ active: opened }"
+          >
+            <div>
+              <v-icon>fas fa-search</v-icon>
+            </div>
+            <div v-show="opened">
+              <div>
+                <div class="search-input">
+                  <input />
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="header-login-logout">Avatar</div>
           <button @click="handleLogout">Log Out</button>
         </div>
@@ -49,6 +66,18 @@
         <SlideFilm :listFilm="allMovieStore" />
       </div>
     </div>
+    <div>
+      <div class="title-listFilm"><h2>Phim Mới</h2></div>
+      <div class="row-film">
+        <SlideFilm :listFilm="allMovieStore" />
+      </div>
+    </div>
+    <div>
+      <div class="title-listFilm"><h2>Phim Mới</h2></div>
+      <div class="row-film">
+        <SlideFilm :listFilm="allMovieStore" />
+      </div>
+    </div>
     <div class="footer-login">
       <Footer />
     </div>
@@ -56,8 +85,8 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside';
 import Footer from '../components/Footer.vue';
-
 import { mapActions, mapGetters } from 'vuex';
 import userActions from '@/store/modules/user/actionTypes';
 import movieActions from '@/store/modules/movie/actionTypes';
@@ -72,6 +101,7 @@ export default {
   data() {
     return {
       currentPath: window.location.hash,
+      opened: false,
     };
   },
   computed: {
@@ -84,12 +114,10 @@ export default {
       logout: userActions.ACT_LOGOUT,
       setAllMovie: movieActions.ACT_GET_ALL_MOVIE,
     }),
-
     handleLogout() {
       this.logout();
       this.$router.push({ name: 'login-page' });
     },
-
     myFunction() {
       var video = document.getElementById('myVideo');
       var btn = document.getElementById('myBtn');
@@ -109,9 +137,25 @@ export default {
         console.log(error);
       }
     },
+    toggle() {
+      this.opened = true;
+    },
+
+    hide() {
+      this.opened = false;
+    },
   },
   created() {
     this.getAllMovie();
+  },
+  mounted() {
+    // prevent click outside event with popupItem.
+    this.popupItem = this.$el;
+  },
+
+  // do not forget this section
+  directives: {
+    ClickOutside,
   },
 };
 </script>
@@ -132,7 +176,16 @@ export default {
   width: 100%;
   padding: 20px;
 }
-
+::v-deep .v-icon {
+  color: #fff;
+}
+.active {
+  display: flex;
+  border: 1px solid;
+}
+.active ::v-deep .v-icon {
+  padding: 5px;
+}
 #myBtn {
   width: 80px;
   font-size: 18px;
@@ -201,6 +254,7 @@ export default {
     }
     .header-login-logout {
       display: flex;
+      align-items: center;
       color: #fff;
       gap: 30px;
       font-size: 13px;
@@ -267,7 +321,6 @@ export default {
     }
   }
 }
-
 .footer-login {
   width: 100%;
 }
