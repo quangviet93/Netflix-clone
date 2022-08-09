@@ -10,10 +10,10 @@
           :color="active ? undefined : 'grey lighten-1'"
           class="ma-4 filmItem"
           height="200"
-          width="300"
+          width="400"
           @click="toggle"
         >
-          <div>
+          <div class="image-filmItem">
             <img :src="n.thumbnail" />
           </div>
         </v-card>
@@ -39,7 +39,7 @@ export default {
   color: #fff;
 }
 .filmItem {
-  padding: 0 5px;
+  padding: 0 20px;
 }
 .theme--light {
   background-color: #141414;
@@ -48,9 +48,15 @@ export default {
   width: 100%;
   height: 100%;
 }
-img {
+.image-filmItem img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.filmItem:hover {
+  padding: 0;
+  z-index: 99;
+  transition: all 0.5s;
+  transform: scale(1.24);
 }
 </style>
