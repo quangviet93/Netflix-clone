@@ -258,6 +258,19 @@ export default {
       color: #fff;
       gap: 30px;
       font-size: 13px;
+      .header-search-input {
+        div {
+          height: auto;
+          div {
+            height: 100%;
+            input {
+              height: 100%;
+              outline: none;
+              color: #ffffff;
+            }
+          }
+        }
+      }
     }
   }
 }
