@@ -5,6 +5,7 @@ node_modules
 /dist
 package.json
 package-lock.json
+request.http
 
 # local env files
 .env.local

@@ -57,6 +57,6 @@ export default {
   padding: 0;
   z-index: 99;
   transition: all 0.5s;
-  transform: scale(1.24);
+  transform: scale(1.05);
 }
 </style>
